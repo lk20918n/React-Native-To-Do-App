@@ -6,6 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   Keyboard,
+  ScrollView,
+  Platform,
 } from "react-native";
 import Task from "./components/Task";
 import React, { useState } from "react";
@@ -32,16 +34,21 @@ export default function App() {
       <View style={styles.tasksWrapper}>
         <Text style={styles.sectionTitle}>Todays tasks</Text>
 
-        <View style={styles.items}>
-          {/* This is where the tasks will go */}
-          {taskItems.map((item, index) => {
-            return (
-              <TouchableOpacity key={index} onPress={() => completeTask(index)}>
-                <Task text={item} />
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.items}>
+            {/* This is where the tasks will go */}
+            {taskItems.map((item, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => completeTask(index)}
+                >
+                  <Task text={item} />
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </ScrollView>
       </View>
 
       {/* write a task */}
@@ -111,6 +118,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   addText: {},
+  scrollView: {
+    height: "80%",
+  },
+  text: {
+    fontSize: 42,
+  },
 });
 
 // https://www.youtube.com/watch?v=00HFzh3w1B8
