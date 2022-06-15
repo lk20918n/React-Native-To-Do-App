@@ -1,28 +1,47 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native';
-import Task from './components/Task';
-import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  TextInput,
+  TouchableOpacity,
+  Keyboard,
+} from "react-native";
+import Task from "./components/Task";
+import React, { useState } from "react";
 
 export default function App() {
   const [task, setTask] = useState();
+  const [taskItems, setTaskItems] = useState([]);
 
   const handleAddTask = () => {
-    console.log(task);
-  }
+    Keyboard.dismiss();
+    setTaskItems([...taskItems, task]);
+    setTask(null);
+  };
+
+  const completeTask = (index) => {
+    let itemsCopy = [...taskItems];
+    itemsCopy.splice(index, 1);
+    setTaskItems(itemsCopy);
+  };
 
   return (
     <View style={styles.container}>
-
       {/* Todays Tasks */}
       <View style={styles.tasksWrapper}>
-
         <Text style={styles.sectionTitle}>Todays tasks</Text>
 
         <View style={styles.items}>
           {/* This is where the tasks will go */}
-          <Task text={'Task 1'} />
-          <Task text={'Task 2'} />
+          {taskItems.map((item, index) => {
+            return (
+              <TouchableOpacity key={index} onPress={() => completeTask(index)}>
+                <Task text={item} />
+              </TouchableOpacity>
+            );
+          })}
         </View>
-
       </View>
 
       {/* write a task */}
@@ -30,7 +49,12 @@ export default function App() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
       >
-        <TextInput style={styles.input} placeholder={'Write a task'}  value={task} onChangeText={text => setTask(text)}/>
+        <TextInput
+          style={styles.input}
+          placeholder={"Write a task"}
+          value={task}
+          onChangeText={(text) => setTask(text)}
+        />
 
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
@@ -38,7 +62,6 @@ export default function App() {
           </View>
         </TouchableOpacity>
       </KeyboardAvoidingView>
-
     </View>
   );
 }
@@ -46,7 +69,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8EAED',
+    backgroundColor: "#E8EAED",
   },
 
   tasksWrapper: {
@@ -55,42 +78,39 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   items: {
     marginTop: 30,
   },
   writeTaskWrapper: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 60,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
   },
   input: {
     paddingVertical: 15,
     paddingHorizontal: 15,
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     borderRadius: 60,
-    borderColor: '#C0C0C0',
+    borderColor: "#C0C0C0",
     borderwidth: 1,
     width: 250,
-
   },
   addWrapper: {
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     borderRadius: 60,
-    borderColor: '#C0C0C0',
+    borderColor: "#C0C0C0",
     borderwidth: 1,
     width: 60,
     height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
-  addText: {
-    
-  },
+  addText: {},
 });
 
 // https://www.youtube.com/watch?v=00HFzh3w1B8
