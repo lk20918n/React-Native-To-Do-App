@@ -17,7 +17,7 @@ export default function App() {
   const [taskItems, setTaskItems] = useState([]);
 
   const handleAddTask = () => {
-    Keyboard.dismiss();
+    // Keyboard.dismiss();
     setTaskItems([...taskItems, task]);
     setTask(null);
   };
@@ -32,7 +32,7 @@ export default function App() {
     <View style={styles.container}>
       {/* Todays Tasks */}
       <View style={styles.tasksWrapper}>
-        <Text style={styles.sectionTitle}>Todays tasks</Text>
+        <Text style={styles.sectionTitle}>Tasks</Text>
 
         <ScrollView style={styles.scrollView}>
           <View style={styles.items}>
@@ -104,14 +104,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     borderRadius: 60,
     borderColor: "#C0C0C0",
-    borderwidth: 1,
+    borderWidth: 1,
     width: 250,
   },
   addWrapper: {
     backgroundColor: "#FFF",
     borderRadius: 60,
     borderColor: "#C0C0C0",
-    borderwidth: 1,
+    borderWidth: 1,
     width: 60,
     height: 60,
     justifyContent: "center",
